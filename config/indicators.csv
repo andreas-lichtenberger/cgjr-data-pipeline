@@ -1,0 +1,4 @@
+indicator,variable,label,unit
+NY.GDP.MKTP.KD.ZG,gdp_growth,GDP growth,annual percent
+NY.GDP.PCAP.KD,gdp_per_capita,GDP per capita,constant 2015 US dollars
+SP.POP.TOTL,population,Population,persons

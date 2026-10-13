@@ -1,0 +1,11 @@
+/data/
+/outputs/
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.Renviron
+.env
+.env.*
+*.pem
+*.key
