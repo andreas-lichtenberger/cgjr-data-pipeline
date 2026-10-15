@@ -1,0 +1,2 @@
+dataset_id,indicator_code,variable,label,unit,sex,classif1
+EMP_2WAP_SEX_AGE_RT_A,EMP_2WAP_SEX_AGE_RT,employment_to_population,Employment-to-population ratio (age 15+ total sex),percent,SEX_T,AGE_YTHADULT_YGE15

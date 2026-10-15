@@ -24,5 +24,4 @@ clean <- bind_rows(lapply(seq_len(nrow(indicators)), function(index) {
   arrange(country_code, year, indicator)
 
 if (nrow(clean) == 0L) stop("No observations remain after filtering.")
-clean <- bind_rows(clean, clean[1, ])
 write.csv(clean, "data/processed/wdi_long.csv", row.names = FALSE, na = "")

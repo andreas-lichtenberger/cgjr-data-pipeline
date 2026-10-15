@@ -23,7 +23,10 @@ WDI supplies GDP growth, GDP per capita (constant 2015 US$) and population.
 Source each script, in this order:
 
  R/01_download_wdi.R
+ R/01b_download_ilostat.R
  R/02_clean_wdi.R
+ R/02b_clean_ilostat.R
+ R/03a_diagnose_merge.R
  R/03_merge_data.R
  R/04_analysis.R
  R/05_quality_checks.R
@@ -31,6 +34,9 @@ Source each script, in this order:
 
 To source a script, open it in the editor and click on the arrow on the top right or type source("filepath") in the terminal - for example `source("R/01_download_wdi.R")`
 
+The ILOSTAT scripts download and clean the configured annual employment-to-population ratio for total sex and age 15+. The cleaned observations are joined to the WDI analytical data by country and year; the ILOSTAT source identifier and status are retained. The selected ILOSTAT dataset currently does not provide an observation-status field, so its processed status values are blank and the cleaner reports a warning.
+
+Run `R/03a_diagnose_merge.R` after both clean scripts, then inspect `data/processed/wdi_ilostat_merge_report.csv` and `data/processed/wdi_ilostat_merge_detail.csv` before running `R/03_merge_data.R`. The diagnostic uses a full join and preserves unmatched rows, missing values, and ILOSTAT source/status metadata. It does not modify `analytical.csv` or decide which source controls the analysis sample.
 
 The scripts create their data and output directories automatically. Downloads
 and generated outputs are ignored by Git. Expected baseline outputs are

@@ -4,7 +4,7 @@ check_data <- function(data) {
   if (!is.integer(data$year)) stop("Year must be integer.")
   if (!is.numeric(data$value)) stop("Value must be numeric.")
   keys <- data[, c("country_code", "year", "indicator")]
-  if (anyDuplicated(keys)) warning("Duplicate country-year-indicator keys.")
+  if (anyDuplicated(keys)) stop("Duplicate country-year-indicator keys.")
   if (anyNA(data$value)) warning("Missing values: investigate coverage.")
   invisible(TRUE)
 }
