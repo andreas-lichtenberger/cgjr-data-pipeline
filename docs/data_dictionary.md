@@ -74,3 +74,22 @@ configured WDI variable, plus the selected ILOSTAT series.
 `gdp_per_capita_growth` is intended to measure the
 percentage change from the same country's previous calendar year. Verify its
 implementation before interpreting it.
+
+## ILOSTAT Presentation Outputs
+
+`R/04b_ilostat_analysis.R` reads `analytical.csv` without changing its sample.
+It builds a display calendar from each configured country/year range, joins
+the analytical values onto it, and leaves absent years missing. Separate line
+segments prevent connections across gaps; baseline tick marks indicate missing
+years. The chart is saved as `outputs/figures/employment_to_population.png`
+at 300 dpi, with common 0-100 percent axes and an ILOSTAT source caption.
+
+`outputs/tables/employment_to_population_summary.csv` contains one row per
+configured country: latest non-missing `latest_year` and `latest_value_percent`,
+`available_years`, `expected_years`, `missing_years`, `coverage_percent`, and
+the latest observation's `source` and `status`. Coverage is 100 times available
+non-missing annual values divided by configured years, rounded to one decimal.
+Latest values retain the input precision. If a country has no available values,
+its latest year/value/source/status are blank and its coverage is zero.
+The table does not discard flagged estimates or treat blank statuses as valid
+or invalid. These descriptive outputs do not establish causal relationships.

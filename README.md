@@ -29,8 +29,10 @@ Source each script, in this order:
  R/03a_diagnose_merge.R
  R/03_merge_data.R
  R/04_analysis.R
+ R/04b_ilostat_analysis.R
  R/05_quality_checks.R
  tests/test_pipeline.R
+ tests/test_ilostat_analysis.R
 
 To source a script, open it in the editor and click on the arrow on the top right or type source("filepath") in the terminal - for example `source("R/01_download_wdi.R")`
 
@@ -43,6 +45,28 @@ and generated outputs are ignored by Git. Expected baseline outputs are
 `outputs/figures/gdp_growth.png` and `outputs/tables/country_summary.csv`.
 The summary is intended to describe the latest available GDP-growth observation.
 Investigate warnings and failed checks, even when plots are produced.
+
+### ILOSTAT chart and coverage table
+
+From a fresh R session with the project root as the working directory, run
+`source("R/04b_ilostat_analysis.R")` after the analytical dataset has been
+generated. It writes `outputs/figures/employment_to_population.png` (300 dpi)
+and `outputs/tables/employment_to_population_summary.csv`, leaving existing
+WDI outputs unchanged.
+
+The chart shows annual employment-to-population ratios for total sex, age 15+,
+with a common percent scale across country panels. Points are observed entries
+in the analytical dataset (ILO modelled estimates, not survey microdata).
+Unavailable configured years break the lines and receive baseline tick marks;
+they are not interpolated. The table gives the latest non-missing year/value,
+its source/status, and coverage relative to each country's configured year range.
+Countries with no values remain in the table with zero coverage and blank
+latest values. Blank status means unavailable, not an inferred quality rating.
+
+Run `source("tests/test_ilostat_analysis.R")` to compare plot values and metadata
+with the analytical input, verify latest values independently, and exercise
+missing-year, all-missing-country, status-retention and duplicate-key cases.
+The tests regenerate the chart and table using the current analytical input.
 
 ## Your Work
 

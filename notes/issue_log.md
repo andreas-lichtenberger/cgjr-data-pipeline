@@ -18,3 +18,26 @@
   2. Pass a fixture with a repeated country-year-indicator row to
      `check_data()` and assert that it raises an error; pass a unique-key
      fixture and assert that it returns `TRUE`.
+
+## ILOSTAT presentation outputs (2026-10-15)
+
+- Added `R/04b_ilostat_analysis.R` to generate a country-panel ratio chart and
+  latest-value/coverage table from the cleaned analytical data, without
+  changing the analytical sample or existing WDI outputs.
+- Missing configured years are explicit in the display data, break line
+  segments, and receive baseline tick marks. Latest values exclude missing
+  values only for selection; zero-coverage countries remain in the table.
+  Source/status fields are retained.
+- Reviewed the proposed changes and generated figure. Increased year-label
+  spacing after visual inspection to prevent crowded endpoint labels.
+- Validation with R 4.5.3:
+  `Rscript --vanilla tests/test_ilostat_analysis.R` passed, checking exact
+  input values and metadata, rendered point country/year/value mappings,
+  latest values, missing periods, gap markers, zero-coverage countries,
+  retained status flags, and duplicate-key rejection.
+- `Rscript --vanilla tests/test_pipeline.R` passed; `git diff --check` passed.
+  SHA256 comparisons confirmed that `analytical.csv`, the GDP growth plot,
+  and the existing country summary were unchanged by the test run.
+- Observed table: 2023 latest values of 57.915 (Brazil), 65.653 (Indonesia),
+  63.814 (Kenya), and 72.335 (Viet Nam), all percent; each has 14/14 available
+  years (100% coverage). The source provides no status flags.
