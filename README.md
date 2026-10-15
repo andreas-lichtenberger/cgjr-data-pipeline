@@ -33,6 +33,7 @@ Source each script, in this order:
  R/05_quality_checks.R
  tests/test_pipeline.R
  tests/test_ilostat_analysis.R
+ tests/test_quality_checks.R
 
 To source a script, open it in the editor and click on the arrow on the top right or type source("filepath") in the terminal - for example `source("R/01_download_wdi.R")`
 
@@ -67,6 +68,17 @@ Run `source("tests/test_ilostat_analysis.R")` to compare plot values and metadat
 with the analytical input, verify latest values independently, and exercise
 missing-year, all-missing-country, status-retention and duplicate-key cases.
 The tests regenerate the chart and table using the current analytical input.
+
+### Full-pipeline validation
+
+Run `source("R/05_quality_checks.R"); validate_pipeline()` to check existing
+files. Sourcing the checker defines functions; call `validate_pipeline()`
+explicitly. For a fresh online end-to-end run without touching existing data
+or outputs, run `Rscript --vanilla tests/run_clean_pipeline.R` in a terminal.
+The runner uses a temporary directory with no pre-existing generated files.
+See [validation.md](docs/validation.md) for each check's risk, severity and
+concise R example. Structural failures stop; coverage and known calculation
+inconsistencies warn without silently removing observations.
 
 ## Your Work
 

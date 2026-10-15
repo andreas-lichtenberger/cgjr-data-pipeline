@@ -26,8 +26,10 @@ if (nrow(ilo_indicator) != 1L) {
 }
 
 to_integer_year <- function(year, source_name) {
-  converted <- suppressWarnings(as.integer(as.character(year)))
-  if (anyNA(converted)) {
+  numeric_year <- suppressWarnings(as.numeric(as.character(year)))
+  converted <- suppressWarnings(as.integer(numeric_year))
+  if (anyNA(converted) ||
+      any(!is.finite(numeric_year) | numeric_year != converted)) {
     stop(source_name, " year contains missing or non-integer values.")
   }
   converted

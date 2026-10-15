@@ -41,3 +41,29 @@
 - Observed table: 2023 latest values of 57.915 (Brazil), 65.653 (Indonesia),
   63.814 (Kenya), and 72.335 (Viet Nam), all percent; each has 14/14 available
   years (100% coverage). The source provides no status flags.
+
+## Full-pipeline automated validation (2026-10-15)
+
+- Extended `R/05_quality_checks.R` with reusable schema/key/bounds checks and
+  `validate_pipeline()` for input configuration, cleaned data types, coverage,
+  units/population concepts, join cardinality, retained values/source/status,
+  generated files, and independent calculation/table consistency checks.
+- Wired key checks into the analytical joins before they can multiply rows.
+  Corrected diagnostic year conversion to reject fractional years rather than
+  silently truncate them. No sample or economic calculation was changed.
+- Added `tests/test_quality_checks.R` for schema, duplicate/missing keys,
+  types, nonfinite values, bounds, and missing-value warnings.
+- Added `tests/run_clean_pipeline.R`: a fresh-download run in a temporary
+  code/configuration-only workspace, with separate stage environments and all
+  tests. It does not reuse or overwrite repository data/outputs.
+- Reviewed the diff and ran the focused edge tests and current-file validator:
+  passed (exit code 0), with two analytical warnings described below.
+- Ran `Rscript --vanilla tests/run_clean_pipeline.R` with R 4.5.3: online WDI
+  and ILOSTAT retrieval, all transformations, plots, tables, and tests completed
+  (exit code 0). Diagnostics: 56 matched keys, 0 WDI-only, 0 ILOSTAT-only.
+- Expected review messages remain visible: no ILOSTAT status field supplied;
+  GDP-per-capita growth disagrees with the previous-calendar-year identity;
+  WDI summary does not select the latest available year. Execution success
+  does not mean these known analytical issues are resolved.
+- The check inventory, risks, concise R examples and severities are documented
+  in `docs/validation.md`. No new package was introduced.

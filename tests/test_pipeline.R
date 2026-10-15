@@ -53,3 +53,5 @@ duplicate_rejected <- tryCatch(
 )
 if (!duplicate_rejected) stop("Edge test failed: duplicate input must raise an error.")
 message("Duplicate-key edge test passed.")
+
+validate_pipeline()
